@@ -3,6 +3,8 @@
 from typing import List
 import re
 import logging
+import os
+import mysql.connector
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -12,6 +14,16 @@ def filter_datum(fields: List[str], redaction: str,
         pattern = fr"(?<=\b{field}=)[^{separator}]+"
         message = re.sub(pattern, f"{redaction}", message)
     return message
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """get_db and connect"""
+    usrname = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    pswd = os.getenv('PERSONAL_DATA_DB_PASSWORD', 'root')
+    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    database = os.getenv('PERSONAL_DATA_DB_NAME')
+    return mysql.connector.connect(user=usrname, password=pswd,
+                                   host=host, database=database)
 
 
 class RedactingFormatter(logging.Formatter):
