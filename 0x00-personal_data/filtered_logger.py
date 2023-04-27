@@ -25,9 +25,7 @@ def get_logger() -> logging.Logger:
     logger.setLevel(logging.INFO)
     logger.propagate = False
     stream_handler = logging.StreamHandler()
-    formatter = RedactingFormatter(
-        '%(asctime)s %(name)s%(levelname)s: %(message)s', PII_FIELDS
-    )
+    formatter = RedactingFormatter(PII_FIELDS)
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     return logger
