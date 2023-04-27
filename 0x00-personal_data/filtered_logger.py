@@ -7,6 +7,9 @@ import os
 import mysql.connector
 
 
+PII_FIELDS = ('name', 'email', 'phone_number', 'address', 'credit_card_number')
+
+
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """matches certain field and changes the value"""
@@ -14,6 +17,20 @@ def filter_datum(fields: List[str], redaction: str,
         pattern = fr"(?<=\b{field}=)[^{separator}]+"
         message = re.sub(pattern, f"{redaction}", message)
     return message
+
+
+def get_logger() -> logging.Logger:
+    """new logger for a user data"""
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    stream_handler = logging.StreamHandler()
+    formatter = RedactingFormatter(
+        '%(asctime)s %(name)s%(levelname)s: %(message)s', PII_FIELDS
+    )
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(stream_handler)
+    return logger
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
