@@ -59,6 +59,6 @@ class BasicAuth(Auth):
         if not listt:
             return None
         user = listt[0]
-        if not user.is_valid_password(user_pwd):
-            return None
-        return user
+        if user.is_valid_password(user_pwd):
+            return user
+        return None
