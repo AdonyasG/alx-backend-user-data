@@ -5,6 +5,7 @@ Module - basic_auth
 
 import base64
 from api.v1.auth.auth import Auth
+from typing import Union
 
 
 class BasicAuth(Auth):
@@ -32,3 +33,13 @@ class BasicAuth(Auth):
             return utf
         except Exception:
             return None
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> tuple:
+        if decoded_base64_authorization_header is None or not isinstance(
+                            decoded_base64_authorization_header, str):
+            return None, None
+        if ':' not in decoded_base64_authorization_header:
+            return None, None
+        email, password = decoded_base64_authorization_header.split(':')
+        return email, password
