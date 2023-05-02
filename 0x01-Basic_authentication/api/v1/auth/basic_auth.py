@@ -47,8 +47,9 @@ class BasicAuth(Auth):
         email, password = decoded_base64_authorization_header.split(':')
         return email, password
 
-    def user_object_from_credentials(self, user_email: str,
-                                     user_pwd: str) -> TypeVar('User'):
+    def user_object_from_credentials(self,
+                                     user_email: str, user_pwd:
+                                     str) -> TypeVar('User'):
         """fetch credential from user object"""
         if user_email is None or not isinstance(user_email, str):
             return None
