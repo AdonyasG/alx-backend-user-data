@@ -20,12 +20,11 @@ auth = None
 if os.getenv("AUTH_TYPE") is not None:
     auth = os.getenv("AUTH_TYPE")
 
-if auth == 'basic_auth':
-    from api.v1.auth.basic_auth import BasicAuth
-    auth = BasicAuth()
-else:
+if auth != 'basic_auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
+else:
+    auth = BasicAuth()
 
 
 @app.before_request
@@ -34,6 +33,8 @@ def before_request():
     auth = BasicAuth()
     if auth is None:
         return
+    if not isinstance(auth, BasicAuth):
+        return None
     excluded_paths = ['/api/v1/status/',
                       '/api/v1/unauthorized/', '/api/v1/forbidden/']
     if request.path in excluded_paths:
