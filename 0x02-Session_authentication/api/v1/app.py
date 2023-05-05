@@ -24,9 +24,6 @@ if os.getenv("AUTH_TYPE") is not None:
 if auth_type == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
-elif auth == 'session_auth':
-    from api.v1.auth import session_auth
-    auth = session_auth()
 else:
     auth = BasicAuth()
 
