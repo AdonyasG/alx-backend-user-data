@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Module - session_auth"""
+"""
+Module - session_auth
+"""
 from api.v1.auth.auth import Auth
 
 
