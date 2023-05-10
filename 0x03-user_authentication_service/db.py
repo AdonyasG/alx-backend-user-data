@@ -51,11 +51,11 @@ class DB:
 
     def update_user(self, user_id, **kwargs) -> None:
         """update user using user_id and attribute"""
-        try:
-            user = self.find_user_by(id=user_id)
-            if user is None:
-                raise NoResultFound
-            for k, v in kwargs.items():
-                setattr(user, k, v)
-        except ValueError:
-            raise ValueError
+        user = self.find_user_by(id=user_id)
+        if user is None:
+            raise NoResultFound
+        for k, v in kwargs.items():
+            if hasattr(user, k) is None:
+                raise ValueError
+            setattr(user, k, v)
+            self._session.commit()
