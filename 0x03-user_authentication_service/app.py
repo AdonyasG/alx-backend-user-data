@@ -27,7 +27,7 @@ def users() -> str:
 
 
 @app.route('/sessions', methods=['POST'])
-def login() -> str:
+def login():
     """login endpoint"""
     email = request.form.get('email')
     password = request.form.get('password')
