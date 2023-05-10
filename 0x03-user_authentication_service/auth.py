@@ -5,6 +5,12 @@ import bcrypt
 from db import DB, User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
+import uuid
+
+
+def _generate_uuid() -> str:
+    """generates str representation of UUID"""
+    return str(uuid.uuid4)
 
 
 def _hash_password(password: str) -> bytes:
