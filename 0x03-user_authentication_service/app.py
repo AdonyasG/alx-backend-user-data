@@ -43,8 +43,8 @@ def login() -> str:
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> str:
     """logout endpoint"""
-    sessions_id = request.cookies.get('session_id')
-    user = AUTH.get_user_from_session_id(sessions_id)
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
         return redirect('/')
@@ -55,9 +55,9 @@ def logout() -> str:
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
     """profile endpoint"""
-    sessions_id = request.cookies.get('session_id')
+    session_id = request.cookies.get('session_id')
 
-    user = AUTH.get_user_from_session_id(sessions_id)
+    user = AUTH.get_user_from_session_id(session_id)
     if user:
         return jsonify({"email": user.email}), 200
     else:
