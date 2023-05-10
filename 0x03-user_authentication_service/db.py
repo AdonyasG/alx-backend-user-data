@@ -48,3 +48,14 @@ class DB:
             return user
         except TypeError:
             raise InvalidRequestError
+
+    def update_user(self, user_id, **kwargs) -> None:
+        """update user using user_id and attribute"""
+        try:
+            user = self.find_user_by(id=user_id)
+            if user is None:
+                raise NoResultFound
+            for k, v in kwargs.items():
+                setattr(user, k, v)
+        except ValueError:
+            raise ValueError
