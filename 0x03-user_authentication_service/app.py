@@ -29,8 +29,8 @@ def users() -> str:
 @app.route('/sessions', methods=['POST'])
 def login():
     """login endpoint"""
-    email = request.form.get('email')
-    password = request.form.get('password')
+    email = request.form.get('email', None)
+    password = request.form.get('password', None)
     responses = {"email": email, "message": "logged in"}
     if Auth.valid_login(email, password):
         session_id = Auth.create_session(email)
