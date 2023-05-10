@@ -33,7 +33,7 @@ def login():
     password = request.form.get('password', None)
     responses = {"email": email, "message": "logged in"}
     if AUTH.valid_login(email, password):
-        session_id = Auth.create_session(email)
+        session_id = AUTH.create_session(email)
         response = make_response(responses)
         response.set_cookie("session_id", session_id)
         return response
