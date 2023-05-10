@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Module app"""
 
-from flask import Flask, jsonify, request, abort, redirect
+from flask import Flask, jsonify, request, abort, redirect, make_response
 from auth import Auth
 
 app = Flask(__name__)
@@ -31,9 +31,10 @@ def login() -> str:
     """login endpoint"""
     email = request.form.get('email')
     password = request.form.get('password')
+    responses = {"email": email, "message": "logged in"}
     if Auth.valid_login(email, password):
         session_id = Auth.create_session(email)
-        response = jsonify({"email": email, "message": "logged in"})
+        response = make_response(jsonify(responses))
         response.set_cookie("session_id", session_id)
         return response
     else:
