@@ -10,7 +10,7 @@ import uuid
 
 def _generate_uuid() -> str:
     """generates str representation of UUID"""
-    return str(uuid.uuid4)
+    return str(uuid.uuid4())
 
 
 def _hash_password(password: str) -> bytes:
