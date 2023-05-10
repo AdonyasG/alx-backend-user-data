@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request, abort, redirect, make_response
 from auth import Auth
 
 app = Flask(__name__)
-Auth = Auth()
+AUTH = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
@@ -20,7 +20,7 @@ def users() -> str:
     email = request.form.get('email')
     password = request.form.get('password')
     try:
-        user = Auth.register_user(email, password)
+        user = AUTH.register_user(email, password)
         return jsonify({"email": user.email, "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
@@ -32,7 +32,7 @@ def login():
     email = request.form.get('email', None)
     password = request.form.get('password', None)
     responses = {"email": email, "message": "logged in"}
-    if Auth.valid_login(email, password):
+    if AUTH.valid_login(email, password):
         session_id = Auth.create_session(email)
         response = make_response(responses)
         response.set_cookie("session_id", session_id)
